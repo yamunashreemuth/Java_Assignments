@@ -1,5 +1,5 @@
 package practise;
-
+import java.text.DecimalFormat;
 class Batsman {
 
 	String name;
@@ -25,16 +25,20 @@ class Batsman {
 		this.fours = fours;
 		this.sixes = sixes;
 	}
+	
+	DecimalFormat dc = new DecimalFormat("#.##");
+	
 	public float getStrikeRate()
 	{
 		float strikerate;
-		strikerate = ((runsScored * 100)/ ballsFaced);
-		return strikerate;
+		strikerate = (float)((runsScored * 100)/ ballsFaced);
+		float format = Float.valueOf(dc.format(strikerate));
+		return format;
 	}
 	public int getRunsScoredInBoundaries()
 	{
 		int boundaries;
-		boundaries  = ( 4 * fours + 6 * sixes );
+		boundaries  = ( 4 * fours + 6 * sixes ); 
 		return boundaries;
 	}
 }
