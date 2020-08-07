@@ -20,7 +20,7 @@ import java.io.*;
 public class CarSale {
 
 	private static Scanner sc = new Scanner(System.in);
-	
+	public static String carVIN;
 
 	
 	private static void displayCars(ArrayList<Car> cars)throws Exception {
@@ -40,7 +40,7 @@ public class CarSale {
 		
 	
 	public static void searchcar(ArrayList<Car> cars) throws Exception {
-		String carVIN;
+		
 		Car carfound = null;
 		do {
 			System.out.println("Enter car VIN no: ");
@@ -50,8 +50,7 @@ public class CarSale {
 		for (Car car : cars) {
             if(car.getcarVIN().equals(carVIN))
             {
-                carfound = car;
-                
+                carfound = car; 
             }    
         }
         if(carfound != null) {
@@ -69,8 +68,14 @@ public class CarSale {
 		decision = sc.next();
 		if(decision.equals("yes")) {
 			for (Car car : cars) {
+				if(car.getcarVIN().equals(carVIN)) {
 			 System.out.println("Congrats you purchased "+car.getcarmake());
-			 
+			// System.out.println(car.getquantity());
+			 int count = (car.getquantity())-1;
+			System.out.println(count);
+				
+			
+				}
 		}
 	}else {
 		System.out.println("Thank you for your interest");
@@ -98,9 +103,11 @@ public class CarSale {
 			System.out.println("Search car list: ");
 			searchcar(cars);
 			purchasecar(cars);
-			break;
+			//break;
 		case 2:
 			System.out.println("Purchase car: ");
+			
+			//searchcar(cars);
 			purchasecar(cars);
 			break;
 		case 3:
@@ -121,7 +128,7 @@ public class CarSale {
         Car newCar = new Car("Mercedes", "SUV", "ADS23", "Black",36000, 5);
         cars.add(newCar);
         cars.add( new Car("Mercedes", "Sedan","EII33", "Red",22000,10));
-		
+		cars.add(new Car("Mercedes","Crossover", "CDL002", "Metallic Gray", 25000, 12));
         
       //  new FileOutputStream("G:\\Yamuna docs\\College docs\\AEM training\\myCars.txt", true).close();
         int menuOption = 0;
@@ -129,21 +136,25 @@ public class CarSale {
        
         try {
         	 menuOption = sc.nextInt();
-			selectcar(menuOption, cars);
+        	 System.out.println(menuOption);
+        	 selectcar(menuOption, cars);
+			while(menuOption != 3) 
+	        {
+	        		FileOutputStream fls = new FileOutputStream("G:\\Yamuna docs\\College docs\\AEM training\\myCars.txt");
+	        		ObjectOutputStream objs = new ObjectOutputStream(fls);
+	        		System.out.println("write text");
+	        		for(Car carr : cars) {
+	        			objs.writeObject(carr);
+	        			System.out.println(carr);
+	        		} 
+	        		fls.close();
+	        		
+	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
         
-        while(menuOption != 3) ;
-        {
-        		FileOutputStream fls = new FileOutputStream("G:\\Yamuna docs\\College docs\\AEM training\\myCars.txt");
-        		ObjectOutputStream objs = new ObjectOutputStream(fls);
-        		
-        		for(Car carr : cars) {
-        			objs.writeObject(carr);
-        		} 
-        		fls.close();
-        }
+        
         
 	}
 
